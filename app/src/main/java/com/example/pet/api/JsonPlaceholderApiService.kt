@@ -1,5 +1,6 @@
 package com.example.pet.api
 
+import com.example.pet.BuildConfig
 import com.example.pet.models.Post
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -22,7 +23,7 @@ interface JsonPlaceholderApiService {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl(BuildConfig.API_URL)
                 .build()
 
             return retrofit.create(JsonPlaceholderApiService::class.java)
