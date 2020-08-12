@@ -11,7 +11,7 @@ import javax.inject.Singleton
 interface ViewModelInjector {
 
     fun inject(mainActivityModel: MainActivityModel)
-    fun inject(mainActivity2Model: CreatePostModel)
+    fun inject(createPostModel: CreatePostModel)
 
     @Component.Builder
     interface Builder {

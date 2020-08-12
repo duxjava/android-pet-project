@@ -17,14 +17,10 @@ class MainActivityModel(private val postDao: PostDao) : BaseViewModel() {
     @Inject
     lateinit var apiServiceInterface: ApiServiceInterface
     private lateinit var subscription: Disposable
-    private val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
+    val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val postListAdapter: PostListAdapter = PostListAdapter()
 
-    init {
-        loadPosts()
-    }
-
-    private fun loadPosts() {
+    fun loadPosts() {
         subscription = Observable.fromCallable { postDao.all }
             .concatMap {
                     dbPostList ->
@@ -40,10 +36,7 @@ class MainActivityModel(private val postDao: PostDao) : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRetrievePostListStart() }
             .doOnTerminate { onRetrievePostListFinish() }
-            .subscribe(
-                { result -> onRetrievePostListSuccess(result) },
-                { onRetrievePostListError() }
-            )
+            .subscribe { result -> onRetrievePostListSuccess(result) }
     }
 
     private fun onRetrievePostListStart() {
@@ -56,10 +49,6 @@ class MainActivityModel(private val postDao: PostDao) : BaseViewModel() {
 
     private fun onRetrievePostListSuccess(posts: List<Post>) {
         postListAdapter.updatePosts(posts)
-    }
-
-    private fun onRetrievePostListError() {
-
     }
 
     override fun onCleared() {

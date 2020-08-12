@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.pet.databinding.ActivityCreatePostBinding
+import com.example.pet.db.ViewModelFactory
 import com.example.pet.models.Post
 import com.example.pet.viewmodel.CreatePostModel
 import com.example.pet.viewmodel.PostViewModel
@@ -13,16 +14,16 @@ import com.example.pet.viewmodel.PostViewModel
 class CreatePostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreatePostBinding
-    private lateinit var view2Model: CreatePostModel
+    private lateinit var viewModel: CreatePostModel
     private lateinit var postViewModel: PostViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_post)
-        view2Model = ViewModelProviders.of(this).get(CreatePostModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(CreatePostModel::class.java)
         postViewModel = ViewModelProviders.of(this).get(PostViewModel::class.java)
-        binding.viewModel = view2Model
+        binding.viewModel = viewModel
         binding.postViewModel = postViewModel
 
         val actionbar = supportActionBar
@@ -43,6 +44,6 @@ class CreatePostActivity : AppCompatActivity() {
             body = postViewModel.getPostBody().value!!
         )
 
-        view2Model.createPosts(post)
+        viewModel.createPosts(post)
     }
 }

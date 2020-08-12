@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,9 +45,17 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         binding.viewModel = viewModel
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.loadingVisibility.observe(this,
+            Observer<Int> { swipeRefreshLayout.isRefreshing = it == View.VISIBLE })
+
+        viewModel.loadPosts()
+    }
+
     override fun onRefresh() {
-        swipeRefreshLayout.isRefreshing = true
-        viewModel.apiServiceInterface
+        viewModel.loadPosts()
     }
 
     fun addPost(v: View) {
