@@ -8,19 +8,19 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pet.adapters.PostAdapter
 import com.example.pet.api.JsonPlaceholderApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PostAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,17 +34,7 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
-        val apiService = JsonPlaceholderApiService.create()
-
-        apiService.getPostAll().observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({ result ->
-                run {
-                    viewAdapter.updatePosts(result)
-                }
-            }, { error ->
-                error.printStackTrace()
-            })
+        loadPosts()
 
         postsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -56,10 +46,32 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        swipeRefreshLayout.setOnRefreshListener(this)
+    }
+
+    override fun onRefresh() {
+        swipeRefreshLayout.isRefreshing = true
+        loadPosts()
     }
 
     fun addPost(v: View) {
         val i = Intent(this, MainActivity2::class.java)
         startActivity(i)
+    }
+
+    @SuppressLint("CheckResult")
+    fun loadPosts() {
+        val apiService = JsonPlaceholderApiService.create()
+
+        apiService.getPostAll().observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({ result ->
+                run {
+                    viewAdapter.updatePosts(result)
+                }
+            }, { error ->
+                error.printStackTrace()
+            }, { swipeRefreshLayout.isRefreshing = false })
     }
 }
