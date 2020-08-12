@@ -10,23 +10,23 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface JsonPlaceholderApiService {
+interface ApiServiceInterface {
 
     @GET("posts")
-    fun getPostAll(): Observable<List<Post>>
+    fun getPosts(): Observable<List<Post>>
 
     @POST("posts")
-    fun addPost(@Body post: Post): Observable<Post>
+    fun createPost(@Body post: Post): Observable<Post>
 
     companion object Factory {
-        fun create(): JsonPlaceholderApiService {
+        fun create(): ApiServiceInterface {
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BuildConfig.API_URL)
                 .build()
 
-            return retrofit.create(JsonPlaceholderApiService::class.java)
+            return retrofit.create(ApiServiceInterface::class.java)
         }
     }
 
