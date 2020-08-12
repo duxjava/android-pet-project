@@ -12,6 +12,7 @@ import com.example.pet.adapters.PostAdapter
 import com.example.pet.api.JsonPlaceholderApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +45,17 @@ class MainActivity : AppCompatActivity() {
             }, { error ->
                 error.printStackTrace()
             })
+
+        postsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0 && fab.visibility == View.VISIBLE) {
+                    fab.hide()
+                } else if (dy < 0 && fab.visibility != View.VISIBLE) {
+                    fab.show()
+                }
+            }
+        })
     }
 
     fun addPost(v: View) {
