@@ -28,6 +28,6 @@
         android:onClick="addPost"
         app:layout_anchor="@id/postsRecyclerView"
         app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_plus" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
