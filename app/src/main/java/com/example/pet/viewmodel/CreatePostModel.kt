@@ -1,6 +1,5 @@
 package com.example.pet.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.example.pet.api.ApiServiceInterface

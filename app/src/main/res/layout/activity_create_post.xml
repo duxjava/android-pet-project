@@ -65,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="sendPost"
+                android:enabled="@{postViewModel.validTitle &amp;&amp; postViewModel.validBody}"
                 android:text="Send" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

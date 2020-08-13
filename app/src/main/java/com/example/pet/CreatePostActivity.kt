@@ -26,6 +26,8 @@ class CreatePostActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.postViewModel = postViewModel
 
+        binding.lifecycleOwner = this
+
         val actionbar = supportActionBar
         actionbar?.setHomeButtonEnabled(true)
         actionbar?.setDisplayHomeAsUpEnabled(true)
