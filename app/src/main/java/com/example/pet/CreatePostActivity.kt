@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.pet.databinding.ActivityCreatePostBinding
-import com.example.pet.db.ViewModelFactory
+import com.example.pet.viewmodel.ViewModelFactory
 import com.example.pet.models.Post
 import com.example.pet.viewmodel.CreatePostModel
 import com.example.pet.viewmodel.PostViewModel
@@ -21,7 +21,9 @@ class CreatePostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_post)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(CreatePostModel::class.java)
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory(this)
+        ).get(CreatePostModel::class.java)
         postViewModel = ViewModelProviders.of(this).get(PostViewModel::class.java)
         binding.viewModel = viewModel
         binding.postViewModel = postViewModel

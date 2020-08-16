@@ -14,11 +14,10 @@ import javax.inject.Inject
 
 class MainActivityModel(private val postDao: PostDao) : BaseViewModel() {
 
-    @Inject
-    lateinit var apiServiceInterface: ApiServiceInterface
+    @Inject lateinit var apiServiceInterface: ApiServiceInterface
+    @Inject lateinit var postListAdapter: PostListAdapter
     private lateinit var subscription: Disposable
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
-    val postListAdapter: PostListAdapter = PostListAdapter()
 
     fun loadPosts() {
         subscription = Observable.fromCallable { postDao.all }

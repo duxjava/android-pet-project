@@ -15,15 +15,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 object NetworkModule {
 
     @Provides
-    @Reusable
-    @JvmStatic
     internal fun providePostApi(retrofit: Retrofit): ApiServiceInterface {
         return retrofit.create(ApiServiceInterface::class.java)
     }
 
     @Provides
-    @Reusable
-    @JvmStatic
     internal fun provideRetrofitInterface(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_URL)

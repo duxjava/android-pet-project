@@ -1,12 +1,10 @@
-package com.example.pet.db
+package com.example.pet.viewmodel
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import com.example.pet.viewmodel.CreatePostModel
-import com.example.pet.viewmodel.MainActivityModel
-import com.example.pet.viewmodel.PostViewModel
+import com.example.pet.db.AppDatabase
 
 class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

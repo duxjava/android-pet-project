@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pet.databinding.ActivityMainBinding
-import com.example.pet.db.ViewModelFactory
+import com.example.pet.viewmodel.ViewModelFactory
 import com.example.pet.viewmodel.MainActivityModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,7 +24,9 @@ class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(MainActivityModel::class.java)
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory(this)
+        ).get(MainActivityModel::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.postsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

@@ -3,13 +3,10 @@ package com.example.pet.viewmodel
 import androidx.lifecycle.ViewModel
 import com.example.pet.di.component.DaggerViewModelInjector
 import com.example.pet.di.component.ViewModelInjector
-import com.example.pet.di.module.NetworkModule
 
 abstract class BaseViewModel : ViewModel() {
-    private val injector: ViewModelInjector = DaggerViewModelInjector
-        .builder()
-        .networkModule(NetworkModule)
-        .build()
+
+    private val inject: ViewModelInjector = DaggerViewModelInjector.create()
 
     init {
         inject()
@@ -17,8 +14,8 @@ abstract class BaseViewModel : ViewModel() {
 
     private fun inject() {
         when (this) {
-            is MainActivityModel -> injector.inject(this)
-            is CreatePostModel -> injector.inject(this)
+            is MainActivityModel -> inject.inject(this)
+            is CreatePostModel -> inject.inject(this)
         }
     }
 }
